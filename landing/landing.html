@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopShere</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./landing.css">
+  </head>
+  <body>
+    <!--Header-->
+    <header>
+        <section>
+            <!-- MAIN CONTAINER -->
+            <div id="container">
+                <!-- SHOP NAME -->
+                <div id="shopName"><span class="shop">SHOP</span><span class="sphere">sphere</span></div>
+                   
+                    <!-- SEARCH SECTION -->
+                    <div id="search">
+                     <i class="fas fa-search search"></i>
+                     <input type="text" id="input" name="searchBox" placeholder="Explore Products, Brands, and Beyond">
+                    </div>
+                    <!-- USER SECTION (CART AND USER ICON) -->
+                    <div id="user">
+                    <a href="./landing.html"><img class="home" width="36" height="36" src="https://img.icons8.com/?size=100&id=86527&format=png&color=000000" alt=""></a>
+                    <a href="../../AddtoCart/cart.html"><img class="cart" width="36" height="36" src="../images/icons8-cart.gif"></a>
+                    <a href="../login/login.html"><img width="38" height="38" src="https://img.icons8.com/fluency-systems-filled/50/user.png" alt="user"></a>
+                    </div>
+            </div>
+        </section>
+    </header>
+    <!---Body Continer-->
+    <section class="body-container">
+      <!--CAROUSEL SECTION-->
+      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="../images/H&m.png" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../images/uspolo.png" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item"></div>
+            <img src="../images/w.png" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+    <!-- PRODUCTS CONTAINERS FROM API -->
+        <div class="main">
+            <h1>CATEGORIES</h1>
+            <div id="loader"></div>
+            <div id="prodcutsContainers">
+              
+             
+            </div>
+            <div id="electronics"></div>
+            <div id="jewellery"></div>
+            <div id="grocery"></div>
+        </div>
+        <div class="loader-container">
+          <div class="cube">
+              <div class="side front"></div>
+              <div class="side back"></div>
+              <div class="side left"></div>
+              <div class="side right"></div>
+              <div class="side top"></div>
+              <div class="side bottom"></div>
+          </div>
+      </div>
+      
+    <!--Footer -->
+    <footer>
+      <section>
+        <div id="Footercontainer">
+          <div id="webFooter">
+            <h3>online store</h3>
+            <p>Clothing</p>
+            <p>Grocery</p>
+            <p>electronics</p>
+            <p>beauty</p>
+            <p>footwear</p>
+            <p>+many</p>
+          </div>
+          <div id="webFooter">
+            <h3>helpful link</h3>
+            <p>home</p>
+            <p>about</p>
+            <p>contact</p>
+          </div>
+          <div id="webFooter">
+            <h3>partners</h3>
+            <p>H&M</p>
+            <p>U.S.polo assn</p>
+            <p>W</p>
+            <p>Levis</p>
+            <p>+ many more</p>
+          </div>
+          <div id="webFooter">
+            <h3>address</h3>
+            <p>building 101</p>
+            <p>central avenue</p>
+            <p>la - 902722</p>
+            <p>united states</p>
+          </div>
+        </div>
+        <div id="credit">
+          <a href="">
+            © PRANATHI VEMIREDDY
+          </a>
+          &nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp
+          <a href="#" target="_blank"> SHOPSHERE </a>
+        </div>
+      </section>
+    </footer>
+    <script src="https://kit.fontawesome.com/3a4127e21c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="./landing.js" ></script>
+  </body>
+</html>

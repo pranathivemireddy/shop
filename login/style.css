@@ -1,0 +1,193 @@
+body {
+    background-image: url(../images/bg2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    color: #fff;
+}
+.login-container .img-container{
+    width: 400px;
+    height:300px;
+}
+.login-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+.img-container {
+    position: relative;
+    width: 600px;
+    height: auto;
+}
+
+.img-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.text {
+    position: absolute;
+    top: 30%;
+    left: 0%;
+    color:black;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    width: 2rem;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 80%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid black;
+    border-radius: 10px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    transition: transform 0.3s;
+}
+.login-container input:focus {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgb(17, 8, 41);
+}
+.login-container button {
+    background: linear-gradient(135deg, #d795bf, #d861a5);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.login-container button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+.login-container a {
+    display: block;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+.login-container a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+.btn-container{
+    padding: 20px;
+    /* background-color: #fff; */
+    gap:30px;
+}
+.imgcontainer {
+    position: relative;
+    width: 400px;
+    height: auto;
+}
+.imgcontainer img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.signup-container {
+    display: none;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+}
+.signup-container .overlay-text{
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    color: #333;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+  .signup-container input {
+    width: 90%;
+    padding: 13px;
+    margin: 10px 0;
+    border: 1px solid black;
+    border-radius: 10px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    transition: transform 0.3s;
+  }
+
+  .signup-container input:focus {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .signup-container button {
+    background: linear-gradient(135deg, #d08bb7, #d861a5);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .signup-container button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+  #skiplogin {
+    display: block; 
+    margin: 20px auto; 
+    background: linear-gradient(135deg, #d98dbd, #d861a5);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 20px;
+    cursor: pointer;
+    width: fit-content;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+
+}
+
+#skiplogin a {
+    text-decoration: none !important; 
+    color: inherit; 
+}
+#skiplogin:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}

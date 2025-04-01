@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./loginfirebase.js" defer></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="img-container">
+            <img src="../images/Shopshere img.jpg" alt="" name="Welcome">
+            <div class="text">Login to Avail Offers</div>
+        </div>
+        <form id="login">
+            <input type="text" placeholder="Username" pattern="[A-Za-z0-9]{8,16}" title="Username length should be minimum 8 and maximum 16" required>
+            <input type="password" placeholder="Password" pattern="(?=.*[A-Z])(?=.*\d)(?=.*@).{8,}" title="Password must be at least 8 characters, include one uppercase letter, one number, and the '@' symbol" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="btn-container">
+            <button onclick="location.href='./login.html'">Forgot Password</button>
+            <button onclick="toggleForms()">Create Account</button>
+        </div>
+    </div>
+    <div class="signup-container" id>
+        <div class="imgcontainer">
+          <img src="../images/login1.jpg" alt="">
+          <div class="overlay-text">SigUp to Avail Offers</div>
+        </div>
+        <form id="signup">
+          <input type="text" placeholder="Name" pattern="[A-Za-z0-9]{8,16}" />
+          <input
+            type="email"
+            placeholder="Email"
+            pattern="[a-z\d.]+@[a-z0-9]+\.[a-z{2,}"
+            required
+          />
+          <input type="text" placeholder="Number" pattern="\d{10}" required />
+          <input
+            type="password"
+            placeholder="Password"
+            pattern="(?=.*[A-Z])(?=.*\d)(?=.*@).{8,}"
+            required
+          />
+          <button type="submit" onclick="toggleForms()">Create Account</button>
+        </form>
+        <div id="skiplogin">
+            <a href="../landing/landing.html">Skip Login</a>
+        </div>
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+            import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+    
+            const firebaseConfig = {
+                apiKey: "AIzaSyCNhCDyU4OgYwN9XjiCERcBmBDKlcWcy7w",
+                authDomain: "shopsphere-678f0.firebaseapp.com",
+                projectId: "shopsphere-678f0",
+                storageBucket: "shopsphere-678f0.firebasestorage.app",
+                messagingSenderId: "503902711076",
+                appId: "1:503902711076:web:ec91fe0beceef5a4f597b1"
+            };
+    
+            const app = initializeApp(firebaseConfig);
+            const provider = new GoogleAuthProvider();
+            const auth = getAuth(app);
+    
+            function showToast(message, success = true) {
+                const toast = document.createElement('div');
+                toast.className = `toast ${success ? 'success' : 'error'}`;
+                toast.textContent = message;
+    
+                document.body.appendChild(toast);
+    
+                // Show toast
+                setTimeout(() => {
+                    toast.classList.add('show');
+                }, 10);
+    
+                // Remove toast after 3 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        document.body.removeChild(toast);
+                    }, 300);
+                }, 3000);
+            }
+    
+    
+    
+            //signup
+            signup.addEventListener('submit', (event) => {
+                event.preventDefault();
+    
+                const submitButton = event.target.querySelector('button');
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<div class="loader"></div>';
+    
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value.trim();
+                const confirmPassword = document.getElementById('confrimPassword').value.trim();
+    
+                if (password !== confirmPassword) {
+                    showToast("Passwords do not match", false);
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Submit';
+                    return;
+                }
+                createUserWithEmailAndPassword(auth, email, password).then(() => {
+                    showToast("User registered successfully!", true);
+                }).catch((error) => {
+                    showToast(`Registration failed: ${error.message}`, false);
+                }).finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Submit';
+                    email.value = ''
+                    password.value = ''
+                    confirmPassword.value = ''
+                });
+            });
+    
+            //LOGIN
+            login.addEventListener('submit', (event) => {
+                event.preventDefault();
+    
+                const submitButton = event.target.querySelector('button');
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<div class="loader"></div>';
+    
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value.trim();
+    
+                if (email === '' || password === '') {
+                    showToast("Please fill out all fields", false);
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Submit';
+                    email.value = ''
+                    password.value = ''
+                    return;
+                }
+                let logindetails = {
+                    displayName: email,
+                    email,
+                    emailVerified: true
+                }
+                signInWithEmailAndPassword(auth, email, password)
+                    .then(() => {
+                        showToast("User logged in successfully!", true);
+                        localStorage.setItem('LoginDetails', JSON.stringify(logindetails))
+                        window.location.href = '../index.html'
+                    })
+                    .catch((error) => {
+                        showToast(`Login failed: ${error.message}`, false);
+                    })
+                    .finally(() => {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = 'Submit';
+                        email.value = ''
+                        password.value = ''
+                    });
+            });
+            // Google Authentication
+            document.getElementById("googleLogin").addEventListener("click", () => {
+                signInWithPopup(auth, provider).then((result) => {
+                        const credential = GoogleAuthProvider.credentialFromResult(result);
+                        const token = credential.accessToken;
+                        const user = result.user;
+                        console.log(user)
+                        localStorage.setItem('LoginDetails', JSON.stringify(user));
+                        setTimeout(() => {
+                            window.location.href = '../landing/landing.html'
+                        }, 1500)
+                    }).catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        const email = error.customData.email;
+                        const credential = GoogleAuthProvider.credentialFromError(error);
+                    });
+                })
+        </script>
+    <script>function toggleForms() {
+        document.getElementsByClassName('login-container')[0].style.display = "none";
+        document.getElementsByClassName('signup-container')[0].style.display = "block";
+    }</script>
+    <script src="./login.js" ></script>
+</body>
+</html>
