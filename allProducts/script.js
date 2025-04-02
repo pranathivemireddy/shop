@@ -3,12 +3,6 @@ document.addEventListener("DOMContentLoaded", getData);
 async function getData() {
     const categoryName = localStorage.getItem("selectedCategory");
     const categoryData = JSON.parse(localStorage.getItem("categoryData"));
-
-    if (!categoryName || !categoryData) {
-        alert('Data Not Found');
-        return;
-    }
-
     displayData(categoryData);
 }
 
@@ -86,6 +80,7 @@ function addToCart(product) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    window.location.href='../AddtoCart/cart.html'
     displayCartItems(); // Refresh cart display
 }
 
@@ -116,6 +111,7 @@ function displayCartItems() {
                     <button onclick="updateQuantity(${index}, -1)">➖</button>
                     <span>${item.quantity}</span>
                     <button onclick="updateQuantity(${index}, 1)">➕</button>
+                    <button onclick="BuyNow" class='buynow'>BuyNow</button>
                 </div>
             </div>
         `;

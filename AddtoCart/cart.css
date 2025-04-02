@@ -99,7 +99,7 @@ body {
 
 /* ✅ Cart Title */
 h2 {
-    margin-top: 20px;
+    margin-top: 100px;
     color: #333;
 }
 
@@ -134,6 +134,28 @@ h2 {
     align-items: center;
     gap: 8px;
 }
+.buynow {
+    background-color: #f18706; /* Orange color */
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.buynow:hover {
+    background-color: #d97305; /* Darker shade on hover */
+    transform: scale(1.05); /* Slight increase in size */
+}
+
+.buynow:active {
+    transform: scale(0.98); /* Subtle press effect */
+}
+
 /* ✅ Toast Notification */
 .toast {
     position: fixed;
@@ -154,4 +176,174 @@ h2 {
     opacity: 1;
 }
 
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1110px){
+    #shopName {
+        font-size: 30px;
+        font-weight: bold;
+    }
+    #search {
+        display: flex;
+        align-items: center;
+        gap: 10px; 
+    }
+
+    #input {
+        width: 32em;  /* Smaller width */
+        height: 2.5em; /* Adjusted height */
+        padding: 5px 15px; /* Balanced padding */
+        background-color: rgb(241, 241, 241);
+        border: none;
+        border-radius: 5px;
+        font-size: 14px; /* Reduce font size */
+    }
+
+    .fas {
+        display: none;
+    }
+
+    #input::placeholder {
+        font-size: 12px; /* Smaller placeholder text */
+    }
+    #user {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+    }
+    #Footercontainer h3:hover,#Footercontainer p:hover {
+    color: lightslategray;
+    cursor: pointer;
+}
+}
+
+/* Tablets (max-width: 1024px) */
+@media (max-width: 1024px){
+    #shopName {
+        font-size: 25px;
+        font-weight: bold;
+    }
+    #search {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Reduce space between input & icon */
+    }
+
+    #input {
+        width: 28em;  
+        height: 2.5em;
+        padding: 5px 18px; 
+        background-color: rgb(241, 241, 241);
+        border: none;
+        border-radius: 5px;
+        font-size: 14px; /* Reduce font size */
+    }
+
+    .search {
+        display: none;
+    }
+
+    #input::placeholder {
+        font-size: 12px; 
+    }
+    #user {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+    }
+    #cartContainer{
+        width: 70vw;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    #Footercontainer {
+        width: 100%;
+        max-width: 1200px; /* Limits width to avoid excessive right margin */
+        background-color: rgb(29, 29, 29);
+        color: white;
+        letter-spacing: 1px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        text-transform: uppercase;
+        font-size: 15px;
+        padding: 30px 50px; /* Reduced padding to balance space */
+        box-sizing: border-box;
+        gap: 40px;
+        margin: 0 auto; /* Centers the footer */
+    }
+    
+    #Footercontainer h3:hover,
+    #Footercontainer p:hover {
+        color: lightslategray;
+        cursor: pointer;
+    }
+}
+
+
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+    #container{
+        width: 768px;
+    }
+    #shopName {
+        font-size: 25px;
+        font-weight: bold;
+    }
+    #search {
+        display:none;
+    }
+
+    #input {
+        width: 10em;  
+        height: 1.2em; 
+        padding: 3px 10px;
+        background-color: rgb(241, 241, 241);
+        border: none;
+        border-radius: 5px;
+        font-size: 8px; /* Reduce font size */
+    }
+
+    .fas {
+        display: none;
+    }
+
+    #input::placeholder {
+        font-size: 8px; 
+    }
+    #cartContainer{
+        width: 100vw;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    /*Footer*/
+    #Footercontainer {
+        display: flex; 
+        flex-direction: column;
+        align-items: center; 
+        text-align: center;  
+        padding: 30px 50px;  
+    }
+    
+    /* Footer Bottom */
+    #credit {
+        width: 100%;
+        margin: auto;
+        padding: 20px 0;
+        text-align: center;
+        background-color: rgb(29, 29, 29);
+        color: white;
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+    #Footercontainer h3:hover,#Footercontainer p:hover {
+    color: lightslategray;
+    cursor: pointer;
+}
+ 
+}
 

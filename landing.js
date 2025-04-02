@@ -9,14 +9,33 @@ const categoryURLs = {
     Laptops : "https://lying-boundless-count.glitch.me/laptops",
     Footwear : "https://rustic-delicious-square.glitch.me/footwear"
     }
+    //Dailog-Box
+    document.getElementById("userIcon").addEventListener("click", function(event) {
+        let userDialog = document.getElementById("userDialog");
+        userDialog.style.display = (userDialog.style.display === "block") ? "none" : "block";
+    
+        // Prevent event from propagating to document click listener
+        event.stopPropagation();
+    });
+    
+    // Close dialog when clicking outside
+    document.addEventListener("click", function(event) {
+        let userDialog = document.getElementById("userDialog");
+        if (userDialog.style.display === "block" && !event.target.closest("#user")) {
+            userDialog.style.display = "none";
+        }
+    });
     
     async function fetchCategoriesData(categoryName) {
-        const url = categoryURLs[categoryName]; //Returns the URL of Particular Category that clicked by user
+        const loader = document.querySelector(".loader-container");
+        loader.style.display = "flex"; // Show loader before fetching
+    
+        const url = categoryURLs[categoryName];
         if (!url) {
             alert("Data Not Found");
+            loader.style.display = "none"; // Hide loader if no data
             return;
         }
-    
         try {
             const response = await fetch(url);
             if (!response.ok) {
@@ -25,14 +44,24 @@ const categoryURLs = {
             const data = await response.json();
             localStorage.setItem("selectedCategory", categoryName);
             localStorage.setItem("categoryData", JSON.stringify(data));
-            window.location.href = "../allProducts/index.html"
+    
+            // Simulate a short delay for smooth UX
+            setTimeout(() => {
+                window.location.href = "../allProducts/index.html";
+            }, 500);
         } catch (error) {
             console.error("Fetch Error:", error);
+        } finally {
+            loader.style.display = "none"; // Hide loader after fetch
         }
     }
+    
+    
     //All Categories
     async function getCategories() {
+        const loader = document.querySelector(".loader-container");
         try {
+            loader.style.display = "block";
             let response = await fetch('https://solid-diligent-iberis.glitch.me/categories');
             if (!response.ok) {
                 throw new Error('THE PAGE YOU ARE LOOKING IS UNAVAILABLE');
@@ -43,31 +72,45 @@ const categoryURLs = {
         } catch (error) {
             console.error("Fetch Error:", error);
         }
+        finally {
+            loader.style.display = "none"; // Hide loader after fetching
+        }
     }
-    function displayCategories(data){
-        let prodcutsContainers = document.getElementById('prodcutsContainers');
-         
+    function displayCategories(data) {
+        let productsContainer = document.getElementById('prodcutsContainers');
+        
+        // Ensure it's empty before adding new content
+        productsContainer.innerHTML = "";
+    
         data.forEach(Obj => {
-            let itemcontainer=document.createElement('div')
-            itemcontainer.className = 'itemContainer'
+            let itemContainer = document.createElement('div');
+            itemContainer.className = 'itemContainer';
     
             let imageContainer = document.createElement('div');
-            imageContainer.className = 'imageContainer'
-            imageContainer.innerHTML =`⁠<img src = '${Obj.categoryimage}'>`
-
+            imageContainer.className = 'imageContainer';
+            imageContainer.innerHTML = `<img src='${Obj.categoryimage}'>`;
+    
             let categoryName = document.createElement('h3');
-            categoryName.className = 'categoryName'
-            categoryName.textContent = `${Obj.categoryname}` 
-            itemcontainer.appendChild(imageContainer);
+            categoryName.className = 'categoryName';
+            categoryName.textContent = `${Obj.categoryname}`;
+    
+            itemContainer.appendChild(imageContainer);
             imageContainer.appendChild(categoryName);
-            prodcutsContainers.appendChild(itemcontainer);
-            itemcontainer.addEventListener('click',()=>fetchCategoriesData(Obj.categoryname))
-    })
+            productsContainer.appendChild(itemContainer);
+            
+            itemContainer.addEventListener('click', () => fetchCategoriesData(Obj.categoryname));
+        });
+    
+        // **Hide loader after rendering**
+        document.querySelector(".loader-container").style.display = "none";
     }
+    
     
     //Electronics
     async function electronics(){
+        const loader = document.querySelector(".loader-container");
         try {
+            loader.style.display = "block";
             let response = await fetch('https://bold-windy-cephalopod.glitch.me/electronics');
             if (!response.ok) {
                 throw new Error('THE PAGE YOU ARE LOOKING IS UNAVAILABLE');
@@ -77,6 +120,9 @@ const categoryURLs = {
             displayelectronics(result);
         } catch (error) {
             console.error("Fetch Error:", error);
+        }
+        finally {
+            loader.style.display = "none";
         }
     }
     function displayelectronics(data) {
@@ -105,6 +151,8 @@ const categoryURLs = {
     
             let buttonElement = document.createElement('button');
             buttonElement.textContent = 'View Product';
+            buttonElement.classList.add('viewproduct');
+
             buttonElement.onclick = ()=>{
                 viewProduct(Obj)
             }
@@ -116,7 +164,9 @@ const categoryURLs = {
     
     //Jewellery
     async function jewellery(){
+        const loader = document.querySelector(".loader-container");
         try {
+            loader.style.display = "block";
             let response = await fetch('https://coffee-curly-brow.glitch.me/products');
             if (!response.ok) {
                 throw new Error('THE PAGE YOU ARE LOOKING IS UNAVAILABLE');
@@ -126,6 +176,9 @@ const categoryURLs = {
             displayjewellery(result);
         } catch (error) {
             console.error("Fetch Error:", error);
+        }
+        finally {
+            loader.style.display = "none";
         }
     }
     function displayjewellery(data) {
@@ -150,6 +203,7 @@ const categoryURLs = {
     
             let buttonElement = document.createElement('button');
             buttonElement.textContent = 'View Product';
+            buttonElement.classList.add('viewproduct');
             buttonElement.onclick = ()=>{
                 viewProduct(Obj)
             }
@@ -157,13 +211,13 @@ const categoryURLs = {
             jewelleryitemcontainer.append(imageElement,buttonElement);
             jewelleryproducts.appendChild(jewelleryitemcontainer);
         });
-    }
-    
-    
-    
+    }    
     //Grocery
     async function grocery(){
+        const loader = document.querySelector(".loader-container");
+        
         try {
+            loader.style.display = "block";
             let response = await fetch('https://ambiguous-marvelous-shrimp.glitch.me/products');
             if (!response.ok) {
                 throw new Error('THE PAGE YOU ARE LOOKING IS UNAVAILABLE');
@@ -172,6 +226,9 @@ const categoryURLs = {
             displaygrocery(result);
         } catch (error) {
             console.error("Fetch Error:", error);
+        }
+        finally {
+            loader.style.display = "none";
         }
     }
     function displaygrocery(data) {
@@ -196,6 +253,7 @@ const categoryURLs = {
     
             let buttonElement = document.createElement('button');
             buttonElement.textContent = 'View Product';
+            buttonElement.classList.add('viewproduct');
             buttonElement.onclick = ()=>{
                 viewProduct(Obj)
             }
@@ -207,7 +265,7 @@ const categoryURLs = {
     function viewProduct(obj){
         console.log('Hello',obj);
         localStorage.setItem('Product',JSON.stringify(obj));
-        window.location.href = '/Landing Page/ProductDetails/product.html'
+        window.location.href = './ProductDetails/product.html'
     }
     function addToCart(product) {
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
