@@ -87,10 +87,15 @@ buttonContainer.className = 'buttonContainer';
 
 let addToCartBtn = document.createElement('button');
 addToCartBtn.innerText = "Add to Cart";
-addToCartBtn.addEventListener("click", function(){ addToCart(objdata)}); // ✅ Add to Cart Functionality
+addToCartBtn.addEventListener("click", function(){ addToCart(objdata)}); 
 
 let buyNowBtn = document.createElement('button');
 buyNowBtn.innerText = "Buy Now";
+buyNowBtn.addEventListener("click", function() {
+    objdata.quantity = 1; 
+    localStorage.setItem("buyNowItem", JSON.stringify(objdata));
+    window.location.href = "/buynow.html"; 
+});
 
 buttonContainer.appendChild(addToCartBtn);
 buttonContainer.appendChild(buyNowBtn);
@@ -135,3 +140,17 @@ function addToCart(product) {
 
     localStorage.setItem("cart", JSON.stringify(cart));
 }
+ //Dailog-Box
+ document.getElementById("userIcon").addEventListener("click", function(event) {
+    let userDialog = document.getElementById("userDialog");
+    userDialog.style.display = (userDialog.style.display === "block") ? "none" : "block";
+    event.stopPropagation();
+});
+
+// Close dialog when clicking outside
+document.addEventListener("click", function(event) {
+    let userDialog = document.getElementById("userDialog");
+    if (userDialog.style.display === "block" && !event.target.closest("#user")) {
+        userDialog.style.display = "none";
+    }
+});

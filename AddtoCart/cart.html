@@ -27,7 +27,7 @@
         </div>
         <!-- USER SECTION (CART AND USER ICON) -->
         <div id="user">
-          <a href="../Landing Page/landing/landing.html"
+          <a href="/landing.html"
             ><img
               class="home"
               width="36"
@@ -35,28 +35,31 @@
               src="https://img.icons8.com/?size=100&id=86527&format=png&color=000000"
               alt=""
           /></a>
-          <a href="../../AddtoCart/cart.html"
+          <a href="/AddtoCart/cart.html"
             ><img
               class="cart"
               width="36"
               height="36"
-              src="../images/icons8-cart.gif"
+              src="/images/icons8-cart.gif"
           /></a>
-          <a href="../login/login.html"
-            ><img
-              width="38"
-              height="38"
-              src="https://img.icons8.com/fluency-systems-filled/50/user.png"
-              alt="user"
-          /></a>
+          <img
+            id="userIcon"
+            width="38"
+            height="38"
+            src="https://img.icons8.com/fluency-systems-filled/50/user.png"
+            alt="user"
+          />
+          <div id="userDialog" class="user-dialog">
+            <p>👤 Welcome, User!</p>
+            <a href="/landing.html">Home</a>
+            <a href="/login/login.html">Logout</a>
+          </div>
         </div>
-      </div>
     </section>
   </header>
   <body>
     <center><h2>Your Shopping Cart</h2></center>
     <div id="cartContainer"></div>
-
     <script src="../allProducts/script.js"></script>
   </body>
 </html>
