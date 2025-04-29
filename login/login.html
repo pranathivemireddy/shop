@@ -1,209 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
-    <!-- Login Container -->
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./loginfirebase.js" defer></script>
+</head>
+<body>
     <div class="login-container">
-      <div class="img-container">
-        <img src="../images/Shopshere img.jpg" alt="Welcome" />
-        <div class="text">Login to Avail Offers</div>
-      </div>
-      <form id="login">
-      <div class="input-group">
-        <i class="fas fa-envelope input-icon"></i>
-        <input type="email" placeholder="Email" id="loginEmail" required />
-      </div>
-      
-      <div class="input-group">
-        <i class="fas fa-lock input-icon"></i>
-        <input type="password" placeholder="Password" id="loginPassword" required />
-      </div>
-      <div class="btn-container">
-        <button type="button" id="googleLogin">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" 
-               alt="Google" width="20" style="margin-right: 10px"/>
-          Sign Up with Google
-        </button>
-        <button type="button" onclick="toggleForms()">Don't Have Account? Create</button>
-      </div>
-     
-      <div id="skiplogin">
-        <a href="../landing.html">Skip Login</a>
-      </div>
-    </form>
+        <div class="img-container">
+            <img src="../images/Shopshere img.jpg" alt="" name="Welcome">
+            <div class="text">Login to Avail Offers</div>
+        </div>
+        <form id="login">
+            <input type="text" placeholder="Username" pattern="[A-Za-z0-9]{8,16}" title="Username length should be minimum 8 and maximum 16" required>
+            <input type="password" placeholder="Password" pattern="(?=.*[A-Z])(?=.*\d)(?=.*@).{8,}" title="Password must be at least 8 characters, include one uppercase letter, one number, and the '@' symbol" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="btn-container">
+            <button onclick="location.href='./login.html'">Forgot Password</button>
+            <button onclick="toggleForms()">Create Account</button>
+        </div>
     </div>
-
-
-    <!-- Signup Container -->
-    <div class="signup-container" style="display: none">
-      <div class="imgcontainer">
-        <img src="../images/login1.jpg" alt="" />
-        <div class="overlay-text">Sign Up to Avail Offers</div>
-      </div>
-      <form id="signup">
-        <input
-          type="text"
-          placeholder="Name"
-          id="signupName"
-          pattern="[A-Za-z0-9]{8,16}"
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          id="signupEmail"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Phone Number"
-          pattern="\d{10}"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          id="signupPassword"
-          pattern="(?=.*[A-Z])(?=.*\d)(?=.*@).{8,}"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          id="confirmPassword"
-          required
-        />
-        <button type="submit">Create Account</button>
-      </form>
-    </div>
-
-    <!-- Firebase and Auth Script -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-      import {
-        getAuth,
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-        GoogleAuthProvider,
-        signInWithPopup,
-      } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyCNhCDyU4OgYwN9XjiCERcBmBDKlcWcy7w",
-        authDomain: "shopsphere-678f0.firebaseapp.com",
-        projectId: "shopsphere-678f0",
-        storageBucket: "shopsphere-678f0.appspot.com",
-        messagingSenderId: "503902711076",
-        appId: "1:503902711076:web:ec91fe0beceef5a4f597b1",
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const provider = new GoogleAuthProvider();
-
-      function showToast(message, success = true) {
-        const toast = document.createElement("div");
-        toast.className = `${success ? "success" : "error"}`;
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.classList.add("show"), 10);
-        setTimeout(() => {
-          toast.classList.remove("show");
-          setTimeout(() => document.body.removeChild(toast), 300);
-        }, 3000);
-      }
-
-      // Toggle Login/Signup Forms
-      window.toggleForms = () => {
-        document.querySelector(".login-container").style.display = "none";
-        document.querySelector(".signup-container").style.display = "block";
-      };
-
-      // Signup Logic
-      const signupForm = document.getElementById("signup");
-      signupForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const email = document.getElementById("signupEmail").value.trim();
-        const password = document.getElementById("signupPassword").value.trim();
-        const confirmPassword = document
-          .getElementById("confirmPassword")
-          .value.trim();
-        const button = signupForm.querySelector("button");
-
-        button.disabled = true;
-        button.innerHTML = '<div class="loader"></div>';
-
-        if (password !== confirmPassword) {
-          showToast("Passwords do not match", false);
-          button.disabled = false;
-          button.innerHTML = "Create Account";
-          return;
-        }
-
-        createUserWithEmailAndPassword(auth, email, password)
-          .then(() => showToast("User registered successfully!"))
-          .catch((error) =>
-            showToast(`Registration failed: ${error.message}`, false)
-          )
-          .finally(() => {
-            button.disabled = false;
-            button.innerHTML = "Create Account";
-          });
-      });
-
-      // Login Logic
-      const loginForm = document.getElementById("login");
-      loginForm.addEventListener("login", (event) => {
-        event.preventDefault();
-        const email = document.getElementById("loginEmail").value.trim();
-        const password = document.getElementById("loginPassword").value.trim();
-        const button = loginForm.querySelector("button");
-
-        button.disabled = true;
-        button.innerHTML = '<div class="loader"></div>';
-
-        signInWithEmailAndPassword(auth, email, password)
-          .then(() => {
-            showToast("Login successful!");
-            localStorage.setItem("LoginDetails", JSON.stringify({ email }));
-            setTimeout(() => (window.location.href = "../landing.html"), 1000);
-          })
-          .catch((error) => showToast(`Login failed: ${error.message}`, false))
-          .finally(() => {
-            button.disabled = false;
-            button.innerHTML = "Login";
-          });
-      });
-
-      // Google Auth
-      document.getElementById("googleLogin").addEventListener("click", () => {
-        console.log('Google login clicked');
-        signInWithPopup(auth, provider)
-          .then((result) => {
-            const user = result.user;
-            localStorage.setItem("LoginDetails", JSON.stringify(user));
-            showToast("Google login successful!");
-            setTimeout(() => {
-              window.location.href = "../landing.html";
-            }, 1500);
-          })
-          .catch((error) => {
-            showToast(`Google login failed: ${error.message}`, false);
-          });
-         
-            document.getElementById("googleLogin").addEventListener("click", function() {
-              console.log("Google button clicked - now working!")
-      })
-    })
-      console.log(document.getElementById("googleLogin"));
-    </script>
-  </body>
+    <div class="signup-container" id>
+        <div class="imgcontainer">
+          <img src="../images/login1.jpg" alt="">
+          <div class="overlay-text">SigUp to Avail Offers</div>
+        </div>
+        <form id="signup">
+          <input type="text" placeholder="Name" pattern="[A-Za-z0-9]{8,16}" />
+          <input
+            type="email"
+            placeholder="Email"
+            pattern="[a-z\d.]+@[a-z0-9]+\.[a-z{2,}"
+            required
+          />
+          <input type="text" placeholder="Number" pattern="\d{10}" required />
+          <input
+            type="password"
+            placeholder="Password"
+            pattern="(?=.*[A-Z])(?=.*\d)(?=.*@).{8,}"
+            required
+          />
+          <button type="submit" onclick="toggleForms()">Create Account</button>
+        </form>
+        <div id="skiplogin">
+            <a href="../landing/landing.html">Skip Login</a>
+        </div>
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+            import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+    
+            const firebaseConfig = {
+                apiKey: "AIzaSyCNhCDyU4OgYwN9XjiCERcBmBDKlcWcy7w",
+                authDomain: "shopsphere-678f0.firebaseapp.com",
+                projectId: "shopsphere-678f0",
+                storageBucket: "shopsphere-678f0.firebasestorage.app",
+                messagingSenderId: "503902711076",
+                appId: "1:503902711076:web:ec91fe0beceef5a4f597b1"
+            };
+    
+            const app = initializeApp(firebaseConfig);
+            const provider = new GoogleAuthProvider();
+            const auth = getAuth(app);
+    
+            function showToast(message, success = true) {
+                const toast = document.createElement('div');
+                toast.className = `toast ${success ? 'success' : 'error'}`;
+                toast.textContent = message;
+    
+                document.body.appendChild(toast);
+    
+                // Show toast
+                setTimeout(() => {
+                    toast.classList.add('show');
+                }, 10);
+    
+                // Remove toast after 3 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        document.body.removeChild(toast);
+                    }, 300);
+                }, 3000);
+            }
+    
+    
+    
+            //signup
+            signup.addEventListener('submit', (event) => {
+                event.preventDefault();
+    
+                const submitButton = event.target.querySelector('button');
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<div class="loader"></div>';
+    
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value.trim();
+                const confirmPassword = document.getElementById('confrimPassword').value.trim();
+    
+                if (password !== confirmPassword) {
+                    showToast("Passwords do not match", false);
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Submit';
+                    return;
+                }
+                createUserWithEmailAndPassword(auth, email, password).then(() => {
+                    showToast("User registered successfully!", true);
+                }).catch((error) => {
+                    showToast(`Registration failed: ${error.message}`, false);
+                }).finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Submit';
+                    email.value = ''
+                    password.value = ''
+                    confirmPassword.value = ''
+                });
+            });
+    
+            //LOGIN
+            login.addEventListener('submit', (event) => {
+                event.preventDefault();
+    
+                const submitButton = event.target.querySelector('button');
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<div class="loader"></div>';
+    
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value.trim();
+    
+                if (email === '' || password === '') {
+                    showToast("Please fill out all fields", false);
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Submit';
+                    email.value = ''
+                    password.value = ''
+                    return;
+                }
+                let logindetails = {
+                    displayName: email,
+                    email,
+                    emailVerified: true
+                }
+                signInWithEmailAndPassword(auth, email, password)
+                    .then(() => {
+                        showToast("User logged in successfully!", true);
+                        localStorage.setItem('LoginDetails', JSON.stringify(logindetails))
+                        window.location.href = '../index.html'
+                    })
+                    .catch((error) => {
+                        showToast(`Login failed: ${error.message}`, false);
+                    })
+                    .finally(() => {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = 'Submit';
+                        email.value = ''
+                        password.value = ''
+                    });
+            });
+            // Google Authentication
+            document.getElementById("googleLogin").addEventListener("click", () => {
+                signInWithPopup(auth, provider).then((result) => {
+                        const credential = GoogleAuthProvider.credentialFromResult(result);
+                        const token = credential.accessToken;
+                        const user = result.user;
+                        console.log(user)
+                        localStorage.setItem('LoginDetails', JSON.stringify(user));
+                        setTimeout(() => {
+                            window.location.href = '../landing/landing.html'
+                        }, 1500)
+                    }).catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        const email = error.customData.email;
+                        const credential = GoogleAuthProvider.credentialFromError(error);
+                    });
+                })
+        </script>
+    <script>function toggleForms() {
+        document.getElementsByClassName('login-container')[0].style.display = "none";
+        document.getElementsByClassName('signup-container')[0].style.display = "block";
+    }</script>
+    <script src="./login.js" ></script>
+</body>
 </html>
